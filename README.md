@@ -184,10 +184,10 @@ python setup_db.py
 
 | Feature | Screenshot |
 | :--- | :--- |
-| **Landing Page** | ![Landing Page](screenshots/landing_page.png) |
-| **News Detection** | ![News Detection](screenshots/news_detection.png) |
-| **Review Detection** | ![Review Detection](screenshots/review_detection.png) |
-| **Detection History** | ![Detection History](screenshots/history.png) |
+| **Landing Page** | ![Landing Page](./screenshots/landing_page.png) |
+| **News Detection** | ![News Detection](./screenshots/news_detection.png) |
+| **Review Detection** | ![Review Detection](./screenshots/review_detection.png) |
+| **Detection History** | ![Detection History](./screenshots/history.png) |
 
 ---
 
@@ -228,9 +228,8 @@ This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for d
 
 ## 📧 Contact Information
 For inquiries or support, please contact:
-- **Email**: support@fakenewsdetection.ai
-- **Website**: [fakenewsdetection.ai](http://localhost:5000)
-- **LinkedIn**: [BCA EXPERT](https://linkedin.com/in/yourprofile)
+- **Email**: [kushalmanke@gmail.com](mailto:kushalmanke@gmail.com)
+- **LinkedIn**: [Kushal Manake](https://www.linkedin.com/in/kushal-manake/)
 
 ---
 *Built with ❤️ for a more truthful digital world.*
