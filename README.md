@@ -182,9 +182,12 @@ python setup_db.py
 
 ## 📸 Screenshots
 
-| Landing Page | Detection Result |
-| :---: | :---: |
-| ![Landing Page Placeholder](https://via.placeholder.com/400x250?text=Landing+Page) | ![Result Placeholder](https://via.placeholder.com/400x250?text=Detection+Result) |
+| Feature | Screenshot |
+| :--- | :--- |
+| **Landing Page** | ![Landing Page](screenshots/landing_page.png) |
+| **News Detection** | ![News Detection](screenshots/news_detection.png) |
+| **Review Detection** | ![Review Detection](screenshots/review_detection.png) |
+| **Detection History** | ![Detection History](screenshots/history.png) |
 
 ---
 
