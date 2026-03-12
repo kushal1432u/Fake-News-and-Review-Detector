@@ -1,0 +1,10 @@
+flask
+flask-cors
+pymysql
+scikit-learn
+nltk
+pandas
+numpy
+opencv-python
+pillow
+joblib

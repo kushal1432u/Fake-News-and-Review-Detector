@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fake News and Review Detector — AI-powered verification engine detecting fake news, fake reviews, and manipulated media in seconds.">
+  <title>Fake News and Review Detector | Stop Misinformation</title>
+  
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="home-page theme-dark">
+
+  <!-- ── Dynamic Particles & Glowing Orb ── -->
+  <div class="bg-orb"></div>
+  <div id="particles-js" class="particles-bg"></div>
+
+  <!-- ── Header ─────────────────────────────────────────── -->
+  <header class="site-header glass-header">
+    <div class="nav-container">
+      <a href="/" class="logo neon-text">Fake News and Review <span>Detector</span></a>
+      <nav class="main-nav">
+        <a href="/" class="nav-link active">Home</a>
+        <a href="/news" class="nav-link">Fake News Detector</a>
+        <a href="/reviews" class="nav-link">Review Detector</a>
+        <a href="/history" class="nav-link">Detection History</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Hero Section ───────────────────────────────────── -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Stop Misinformation<br><span class="gradient-text">Before It Spreads</span></h1>
+      <p class="hero-subtext">AI-powered verification engine detecting fake news, fake reviews, and manipulated media in seconds.</p>
+      
+      <div class="hero-cta">
+        <a href="/news" class="btn btn-neon btn-lg">Analyze News</a>
+        <a href="/reviews" class="btn btn-outline btn-lg">Detect Fake Review</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Trust Indicators ───────────────────────────────── -->
+  <section class="trust-bar">
+    <div class="trust-container">
+      <div class="trust-item"><span class="trust-icon">⚡</span> AI Powered</div>
+      <div class="trust-item"><span class="trust-icon">🛡️</span> Verified Detection</div>
+      <div class="trust-item"><span class="trust-icon">🔒</span> Data Secure</div>
+      <div class="trust-item"><span class="trust-icon">👁️</span> Privacy First</div>
+    </div>
+  </section>
+
+  <!-- ── Feature Cards ──────────────────────────────────── -->
+  <section class="features-section">
+    <div class="container">
+      <div class="card-grid">
+
+        <a href="/news" class="feature-card glass-panel" id="card-news">
+          <div class="card-glow-bg"></div>
+          <div class="card-icon-wrapper"><span class="card-icon cyan-glow">📰</span></div>
+          <h3 class="card-title">Fake News Detection</h3>
+          <p class="card-desc">Analyze articles and headlines using NLP transformers to detect misinformation.</p>
+          <span class="tech-badge">BERT + Passive Aggressive</span>
+        </a>
+
+        <a href="/reviews" class="feature-card glass-panel" id="card-reviews">
+          <div class="card-glow-bg"></div>
+          <div class="card-icon-wrapper"><span class="card-icon purple-glow">⭐</span></div>
+          <h3 class="card-title">Fake Review Detection</h3>
+          <p class="card-desc">Identify bot-generated or deceptive reviews using sentiment analysis and ML models.</p>
+          <span class="tech-badge">Logistic Regression + NLP</span>
+        </a>
+
+        <a href="/history" class="feature-card glass-panel" id="card-history">
+          <div class="card-glow-bg"></div>
+          <div class="card-icon-wrapper"><span class="card-icon purple-glow">📋</span></div>
+          <h3 class="card-title">Trust History</h3>
+          <p class="card-desc">Track all detection results and build a credibility record over time.</p>
+          <span class="tech-badge">MySQL AI Audit Log</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Accuracy Section ───────────────────────────────── -->
+  <section class="accuracy-section">
+    <div class="accuracy-container glass-panel">
+      <div class="accuracy-content">
+        <h2 class="counter-val neon-text-cyan" id="accuracy-counter">99.8%</h2>
+        <h3 class="counter-label">Detection Accuracy</h3>
+        <p class="counter-desc">Trained on thousands of verified datasets using advanced machine learning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Live Demo Section ──────────────────────────────── -->
+  <section class="demo-section">
+    <div class="container">
+      <div class="demo-header">
+        <h2>Live System Demo</h2>
+        <p>Test the verification engine directly from the dashboard.</p>
+      </div>
+      
+      <div class="demo-console glass-panel">
+        <div class="demo-tabs">
+          <button class="demo-tab active" data-target="demo-news">News</button>
+          <button class="demo-tab" data-target="demo-review">Review</button>
+        </div>
+        
+        <div class="demo-body">
+          <!-- Text Input (News/Review) -->
+          <div class="demo-input-group active" id="demo-text-mode">
+            <textarea id="demo-text-input" placeholder="Paste an article headline, text, or a product review here..."></textarea>
+          </div>
+
+          <div class="demo-actions">
+            <button class="btn btn-neon" id="demo-run-btn">
+              <span class="btn-icon">⚡</span> Run AI Detection
+            </button>
+            <div class="demo-spinner" id="demo-spinner" style="display: none;"></div>
+          </div>
+          
+          <!-- Result Output -->
+          <div class="demo-result" id="demo-result-panel" style="display: none;">
+            <div class="result-header">
+              <h4 id="demo-result-title">Analysis Complete</h4>
+              <span class="confidence-badge" id="demo-confidence">--%</span>
+            </div>
+            <div class="result-verdict" id="demo-verdict">--</div>
+            <div class="result-details" id="demo-details"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <h3 class="footer-logo">Fake News and Review <span>Detector</span></h3>
+      <p class="tagline">Building a world where truth spreads faster than misinformation.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">API Documentation</a>
+      </div>
+      <p class="copyright">&copy; 2026 Fake News and Review Detector. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/static/js/particles.min.js"></script>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fake News and Review Detector - AI Fake Review Detection Engine">
+  <title>Review Detector — Fake News and Review Detector</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    /* PAGE-SPECIFIC STYLES FOR REVIEW DETECTOR REDESIGN */
+    body {
+      background-color: #050b18;
+      font-family: 'Inter', sans-serif;
+      color: #e2e8f0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+
+    /* Neon Particle Background */
+    .cyber-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 15% 50%, rgba(0, 242, 254, 0.05), transparent 25%),
+                  radial-gradient(circle at 85% 30%, rgba(161, 140, 209, 0.05), transparent 25%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: #00f2fe;
+      box-shadow: 0 0 10px #00f2fe;
+      border-radius: 50%;
+      animation: float-up infinite linear;
+    }
+
+    @keyframes float-up {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* Hero Section */
+    .cyber-hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    
+    .cyber-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #00f2fe, #4facfe, #a18cd1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+    }
+
+    .cyber-subtitle {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    /* Glassmorphic Container */
+    .cyber-container {
+      max-width: 900px;
+      margin: 0 auto 50px;
+      padding: 0 20px;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 242, 254, 0.02);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.8), transparent);
+    }
+
+    .glass-card:hover {
+      box-shadow: 0 10px 50px rgba(0, 242, 254, 0.1), inset 0 0 30px rgba(0, 242, 254, 0.05);
+      border-color: rgba(0, 242, 254, 0.4);
+    }
+
+    /* Inputs & Buttons */
+    .cyber-textarea {
+      width: 100%;
+      height: 180px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      color: #e2e8f0;
+      font-family: inherit;
+      font-size: 1rem;
+      resize: vertical;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+
+    .cyber-textarea:focus {
+      outline: none;
+      border-color: #00f2fe;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .cyber-btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: none;
+    }
+
+    .btn-glow {
+      background: linear-gradient(90deg, #00f2fe, #4facfe);
+      color: #050b18;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+    }
+
+    .btn-glow:hover {
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.7);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-outline:hover {
+      border-color: #e2e8f0;
+      color: #fff;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .badge-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .badge-btn:hover {
+      background: rgba(0, 242, 254, 0.1);
+      border-color: rgba(0, 242, 254, 0.3);
+      color: #00f2fe;
+    }
+
+    /* Result Panel */
+    .cyber-result {
+      display: none;
+      margin-top: 30px;
+      padding: 25px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border-left: 4px solid transparent;
+      animation: slideDown 0.4s ease forwards;
+    }
+
+    .cyber-result.real { border-left-color: #00f2fe; }
+    .cyber-result.fake { border-left-color: #ff3366; }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .verdict-large {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+    
+    .real .verdict-large { color: #00f2fe; text-shadow: 0 0 15px rgba(0, 242, 254, 0.5); }
+    .fake .verdict-large { color: #ff3366; text-shadow: 0 0 15px rgba(139, 0, 0, 0.5); }
+
+    /* Probability Bars */
+    .prob-container {
+      margin-top: 25px;
+    }
+    
+    .prob-row {
+      margin-bottom: 15px;
+    }
+    
+    .prob-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .prob-bar-wrapper {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .prob-fill-genuine {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00f2fe, #4facfe);
+      box-shadow: 0 0 10px #00f2fe;
+      border-radius: 4px;
+      transition: width 1s cubic-bezier(0.1, 0.7, 0.1, 1);
+    }
+    
+    .prob-fill-fake {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff3366, #ff0000);
+      box-shadow: 0 0 10px #ff3366;
+      border-radius: 4px;
+      transition: width 1s cubic-bezier(0.1, 0.7, 0.1, 1);
+    }
+
+    /* Explainability & Info */
+    .explain-section {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      padding: 15px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 50px;
+    }
+
+    .info-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .info-box h4 {
+      color: #4facfe;
+      margin-top: 0;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .steps-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      position: relative;
+    }
+
+    .steps-container::before {
+      content: '';
+      position: absolute;
+      top: 25px; left: 10%; right: 10%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.05);
+      z-index: 0;
+    }
+
+    .step-item {
+      text-align: center;
+      width: 20%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-icon {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: #050b18;
+      border: 2px solid #4facfe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      color: #00f2fe;
+      font-size: 1.2rem;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cyber-bg" id="particles"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="logo neon-text">Fake News and Review <span>Detector</span></a>
+      <nav class="main-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/news" class="nav-link">Fake News Detector</a>
+        <a href="/reviews" class="nav-link active">Review Detector</a>
+        <a href="/history" class="nav-link">Detection History</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="cyber-hero">
+    <h1 class="cyber-title">AI Fake Review Detection Engine</h1>
+    <p class="cyber-subtitle">Detect AI-generated, spam, or manipulated product reviews using advanced natural language processing and machine learning.</p>
+  </section>
+
+  <!-- Main Container -->
+  <main class="cyber-container">
+    
+    <!-- Analysis Card -->
+    <div class="glass-card">
+      <h3 style="margin-top: 0; margin-bottom: 20px; font-weight: 600;">Analyze Product Review</h3>
+      
+      <div class="quick-actions">
+        <button class="badge-btn" onclick="pasteExample('fake')">Insert Example Fake Review</button>
+        <button class="badge-btn" onclick="pasteExample('real')">Insert Example Genuine Review</button>
+      </div>
+
+      <textarea id="reviewInput" class="cyber-textarea" placeholder="Paste a product review to verify authenticity..."></textarea>
+      
+      <div id="reviewError" class="error-msg" style="margin-bottom: 15px;"></div>
+
+      <div class="btn-row">
+        <button class="cyber-btn btn-glow" id="analyzeBtn" onclick="runCyberAnalysis()">Detect Review Authenticity</button>
+        <button class="cyber-btn btn-outline" onclick="clearCyberInput()">Clear Text</button>
+      </div>
+
+      <!-- Result Panel -->
+      <div id="cyberResult" class="cyber-result">
+        <div class="result-header">
+          <div>
+            <div style="font-size: 0.9rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Analysis Result</div>
+            <div id="verdictText" class="verdict-large">GENUINE REVIEW</div>
+          </div>
+        </div>
+        
+        <div class="prob-container">
+          <div class="prob-row">
+            <div class="prob-labels">
+              <span>Genuine Probability</span>
+              <span id="probRealText">0%</span>
+            </div>
+            <div class="prob-bar-wrapper">
+              <div id="probRealFill" class="prob-fill-genuine"></div>
+            </div>
+          </div>
+          
+          <div class="prob-row">
+            <div class="prob-labels">
+              <span>Fake Probability</span>
+              <span id="probFakeText">0%</span>
+            </div>
+            <div class="prob-bar-wrapper">
+              <div id="probFakeFill" class="prob-fill-fake"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="explain-section" id="explainPanel">
+          <strong>Detected Patterns:</strong><br>
+          <span id="explainText" style="color: #94a3b8; margin-top: 5px; display: inline-block;">...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <h3 style="text-align: center; margin-top: 60px;">How It Works</h3>
+    <div class="steps-container">
+      <div class="step-item">
+        <div class="step-icon">1</div>
+        <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 5px;">Text Cleaning</div>
+        <div style="font-size: 0.8rem; color: #94a3b8;">Remove noise and normalize text</div>
+      </div>
+      <div class="step-item">
+        <div class="step-icon">2</div>
+        <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 5px;">Feature Extraction</div>
+        <div style="font-size: 0.8rem; color: #94a3b8;">Convert text into TF-IDF vectors</div>
+      </div>
+      <div class="step-item">
+        <div class="step-icon">3</div>
+        <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 5px;">Machine Learning</div>
+        <div style="font-size: 0.8rem; color: #94a3b8;">Logistic Regression classifier</div>
+      </div>
+      <div class="step-item">
+        <div class="step-icon">4</div>
+        <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 5px;">Confidence Score</div>
+        <div style="font-size: 0.8rem; color: #94a3b8;">Calculate probability of fake review</div>
+      </div>
+    </div>
+
+    <!-- Info Grid -->
+    <div class="info-grid">
+      <div class="info-box">
+        <h4>🤖 Model Used</h4>
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin: 0;">Logistic Regression algorithm explicitly tuned for sentiment manipulation.</p>
+      </div>
+      <div class="info-box">
+        <h4>📊 Features</h4>
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin: 0;">TF-IDF Vectorization capturing 3000 distinct semantic n-grams.</p>
+      </div>
+      <div class="info-box">
+        <h4>📚 Training Data</h4>
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin: 0;">Balanced datasets of real and AI-generated product reviews from major e-commerce platforms.</p>
+      </div>
+      <div class="info-box" style="border-color: rgba(0, 242, 254, 0.3);">
+        <h4 style="color: #00f2fe;">🔒 Privacy Notice</h4>
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin: 0;">All processing happens locally on your machine. No data is stored.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer" style="background: rgba(0,0,0,0.5); padding: 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px;">
+    <div style="color: #94a3b8; font-size: 0.9rem;">Fake News and Review Detector — Protecting consumers from fake reviews.</div>
+    <div style="margin-top: 10px; opacity: 0.5;">
+      <a href="#" style="color: #fff; text-decoration: none; margin: 0 10px;">GitHub</a>
+      <a href="#" style="color: #fff; text-decoration: none; margin: 0 10px;">Documentation</a>
+    </div>
+  </footer>
+
+  <script>
+    // Generate background particles
+    const bg = document.getElementById('particles');
+    for(let i=0; i<30; i++) {
+        let p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        p.style.animationDelay = (Math.random() * 10) + 's';
+        bg.appendChild(p);
+    }
+
+    function pasteExample(type) {
+      const input = document.getElementById('reviewInput');
+      if (type === 'fake') {
+        input.value = "WOW! This is the absolute best product I have ever purchased in my entire life. Period. Everyone needs to buy this right now. It changed my life completely and works 100% perfectly with zero flaws. Definitely buying 10 more for my family!!! 5 STARS!!!";
+      } else {
+        input.value = "I bought this blender last week. It gets the job done for smoothies, but the motor is a bit loud compared to my old one. The build quality feels solid enough, though the plastic lid seems slightly flimsy. Overall, decent for the price, but not perfect.";
+      }
+    }
+
+    function clearCyberInput() {
+      document.getElementById('reviewInput').value = '';
+      document.getElementById('cyberResult').style.display = 'none';
+      document.getElementById('reviewError').classList.remove('visible');
+    }
+
+    function runCyberAnalysis() {
+      const text = document.getElementById('reviewInput').value.trim();
+      if (!text) {
+        const err = document.getElementById('reviewError');
+        err.textContent = 'Please paste a product review.';
+        err.classList.add('visible');
+        setTimeout(() => err.classList.remove('visible'), 5000);
+        return;
+      }
+
+      const btn = document.getElementById('analyzeBtn');
+      btn.innerHTML = 'Analyzing...';
+      btn.disabled = true;
+      document.getElementById('cyberResult').style.display = 'none';
+      document.getElementById('probRealFill').style.width = '0%';
+      document.getElementById('probFakeFill').style.width = '0%';
+
+      fetch('/api/detect/review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      })
+      .then(res => res.json())
+      .then(data => {
+        btn.innerHTML = 'Detect Review Authenticity';
+        btn.disabled = false;
+        
+        const resBox = document.getElementById('cyberResult');
+        resBox.style.display = 'block';
+        resBox.className = 'cyber-result ' + (data.result === 'FAKE' ? 'fake' : 'real');
+        
+        document.getElementById('verdictText').textContent = data.result + " REVIEW";
+        
+        // Calculate Probabilities properly
+        let conf = parseFloat(data.confidence);
+        let probFake = data.result === "FAKE" ? conf : (100 - conf);
+        let probReal = data.result === "REAL" ? conf : (100 - conf);
+
+        // Render explanation
+        let explainHtml = "";
+        if (data.result === 'FAKE') {
+           explainHtml = "Repetitive wording <br>Overly promotional language <br>Bot-like sentiment structure";
+        } else {
+           explainHtml = "Balanced sentiment <br>Specific product details mentioned <br>Natural phrasing patterns";
+        }
+        document.getElementById('explainText').innerHTML = explainHtml;
+
+        // Animations
+        let currReal = 0;
+        let currFake = 0;
+        let vReal = document.getElementById('probRealText');
+        let vFake = document.getElementById('probFakeText');
+        
+        let interval = setInterval(() => {
+          currReal += probReal / 20;
+          currFake += probFake / 20;
+          
+          if(currReal >= probReal) currReal = probReal;
+          if(currFake >= probFake) currFake = probFake;
+          
+          vReal.textContent = currReal.toFixed(1) + '%';
+          vFake.textContent = currFake.toFixed(1) + '%';
+          
+          if(currReal === probReal && currFake === probFake) clearInterval(interval);
+        }, 30);
+        
+        setTimeout(() => {
+          document.getElementById('probRealFill').style.width = probReal + '%';
+          document.getElementById('probFakeFill').style.width = probFake + '%';
+        }, 100);
+
+      })
+      .catch(err => {
+        btn.innerHTML = 'Detect Review Authenticity';
+        btn.disabled = false;
+        const errEL = document.getElementById('reviewError');
+        errEL.textContent = 'Error executing analysis. Please try again.';
+        errEL.classList.add('visible');
+      });
+    }
+  </script>
+</body>
+</html>

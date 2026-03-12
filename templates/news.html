@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fake News and Review Detector - AI-powered Misinformation Verification">
+  <title>News Detector — Fake News and Review Detector</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    /* PAGE-SPECIFIC STYLES FOR NEWS DETECTOR REDESIGN */
+    body {
+      background-color: #050b18;
+      font-family: 'Inter', sans-serif;
+      color: #e2e8f0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+
+    /* Neon Particle Background */
+    .cyber-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 15% 50%, rgba(0, 242, 254, 0.05), transparent 25%),
+                  radial-gradient(circle at 85% 30%, rgba(161, 140, 209, 0.05), transparent 25%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: #00f2fe;
+      box-shadow: 0 0 10px #00f2fe;
+      border-radius: 50%;
+      animation: float-up infinite linear;
+    }
+
+    @keyframes float-up {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* Hero Section */
+    .cyber-hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    
+    .cyber-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #00f2fe, #4facfe, #a18cd1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+    }
+
+    .cyber-subtitle {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    /* Glassmorphic Container */
+    .cyber-container {
+      max-width: 900px;
+      margin: 0 auto 50px;
+      padding: 0 20px;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 242, 254, 0.2);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 242, 254, 0.02);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 242, 254, 0.8), transparent);
+    }
+
+    .glass-card:hover {
+      box-shadow: 0 10px 50px rgba(0, 242, 254, 0.1), inset 0 0 30px rgba(0, 242, 254, 0.05);
+      border-color: rgba(0, 242, 254, 0.4);
+    }
+
+    /* Inputs & Buttons */
+    .cyber-textarea {
+      width: 100%;
+      height: 180px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      color: #e2e8f0;
+      font-family: inherit;
+      font-size: 1rem;
+      resize: vertical;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+
+    .cyber-textarea:focus {
+      outline: none;
+      border-color: #00f2fe;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .cyber-btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: none;
+    }
+
+    .btn-glow {
+      background: linear-gradient(90deg, #00f2fe, #4facfe);
+      color: #050b18;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+    }
+
+    .btn-glow:hover {
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.7);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-outline:hover {
+      border-color: #e2e8f0;
+      color: #fff;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .badge-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .badge-btn:hover {
+      background: rgba(0, 242, 254, 0.1);
+      border-color: rgba(0, 242, 254, 0.3);
+      color: #00f2fe;
+    }
+
+    /* Result Panel */
+    .cyber-result {
+      display: none;
+      margin-top: 30px;
+      padding: 25px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.4);
+      border-left: 4px solid transparent;
+      animation: slideDown 0.4s ease forwards;
+    }
+
+    .cyber-result.real { border-left-color: #00f2fe; }
+    .cyber-result.fake { border-left-color: #ff3366; }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .verdict-large {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+    
+    .real .verdict-large { color: #00f2fe; text-shadow: 0 0 15px rgba(0, 242, 254, 0.5); }
+    .fake .verdict-large { color: #ff3366; text-shadow: 0 0 15px rgba(139, 0, 0, 0.5); }
+
+    .confidence-wrapper {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+
+    .confidence-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 4px;
+      transition: width 1s cubic-bezier(0.1, 0.7, 0.1, 1);
+    }
+    
+    .real .confidence-fill { background: linear-gradient(90deg, #00f2fe, #4facfe); box-shadow: 0 0 10px #00f2fe; }
+    .fake .confidence-fill { background: linear-gradient(90deg, #ff3366, #ff0000); box-shadow: 0 0 10px #ff3366; }
+
+    /* Explainability & Info */
+    .explain-section {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 50px;
+    }
+
+    .info-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .info-box h4 {
+      color: #4facfe;
+      margin-top: 0;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .steps-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      position: relative;
+    }
+
+    .steps-container::before {
+      content: '';
+      position: absolute;
+      top: 25px; left: 10%; right: 10%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.05);
+      z-index: 0;
+    }
+
+    .step-item {
+      text-align: center;
+      width: 20%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-icon {
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: #050b18;
+      border: 2px solid #4facfe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 15px;
+      color: #00f2fe;
+      font-size: 1.2rem;
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cyber-bg" id="particles"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="logo neon-text">Fake News and Review <span>Detector</span></a>
+      <nav class="main-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/news" class="nav-link active">Fake News Detector</a>
+        <a href="/reviews" class="nav-link">Review Detector</a>
+        <a href="/history" class="nav-link">Detection History</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="cyber-hero">
+    <h1 class="cyber-title">AI Fake News Detection Engine</h1>
+    <p class="cyber-subtitle">Analyze headlines, articles, and viral posts using advanced machine learning models trained on thousands of real and fake news datasets.</p>
+  </section>
+
+  <!-- Main Container -->
+  <main class="cyber-container">
+    
+    <!-- Analysis Card -->
+    <div class="glass-card">
+      <h3 style="margin-top: 0; margin-bottom: 20px; font-weight: 600;">Paste News Article or Headline</h3>
+      
+      <div class="quick-actions">
+        <button class="badge-btn" onclick="pasteExample('fake')">Paste Example Fake News</button>
+        <button class="badge-btn" onclick="pasteExample('real')">Paste Example Real News</button>
+      </div>
+
+      <textarea id="newsInput" class="cyber-textarea" placeholder="Paste a news headline or full article to verify authenticity..."></textarea>
+      
+      <div id="newsError" class="error-msg" style="margin-bottom: 15px;"></div>
+
+      <div class="btn-row">
+        <button class="cyber-btn btn-glow" id="analyzeBtn" onclick="runCyberAnalysis()">Analyze with AI</button>
+        <button class="cyber-btn btn-outline" onclick="clearCyberInput()">Clear Text</button>
+      </div>
+
+      <!-- Result Panel -->
+      <div id="cyberResult" class="cyber-result">
+        <div class="result-header">
+          <div>
+            <div style="font-size: 0.9rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Prediction Result</div>
+            <div id="verdictText" class="verdict-large">REAL NEWS</div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 0.9rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Confidence Score</div>
+            <div style="font-size: 1.8rem; font-weight: 700; font-family: 'Space Mono', monospace;" id="confValue">0%</div>
+          </div>
+        </div>
+        
+        <div class="confidence-wrapper">
+          <div id="confBar" class="confidence-fill"></div>
+        </div>
+
+        <div class="explain-section">
+          <strong>Explainability Analysis:</strong> 
+          <span id="explainText">Identifying linguistic patterns, TF-IDF feature weights, and cross-referencing global sources...</span>
+        </div>
+        
+        <div id="sourceLinks" style="margin-top: 15px; font-size: 0.9rem;"></div>
+      </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <h3 style="text-align: center; margin-top: 60px;">How It Works</h3>
+    <div class="steps-container">
+      <div class="step-item">
+        <div class="step-icon">1</div>
+        <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 5px;">Text Processing</div>
+        <div style="font-size: 0.8rem; color: #94a3b8;">Lowercasing & noise removal</div>
+      </div>
+      <div class="step-item">
+        <div class="step-icon">2</div>
+        <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 5px;">Feature Extraction</div>
+        <div style="font-size: 0.8rem; color: #94a3b8;">TF-IDF vectorization</div>
+      </div>
+      <div class="step-item">
+        <div class="step-icon">3</div>
+        <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 5px;">AI Classification</div>
+        <div style="font-size: 0.8rem; color: #94a3b8;">ML pattern prediction</div>
+      </div>
+      <div class="step-item">
+        <div class="step-icon">4</div>
+        <div style="font-weight: 600; font-size: 0.9rem; margin-bottom: 5px;">Fact Checking</div>
+        <div style="font-size: 0.8rem; color: #94a3b8;">Live DDGS verification</div>
+      </div>
+    </div>
+
+    <!-- Info Grid -->
+    <div class="info-grid">
+      <div class="info-box">
+        <h4>🤖 Model Used</h4>
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin: 0;">Passive Aggressive Classifier optimized for dynamic text streams.</p>
+      </div>
+      <div class="info-box">
+        <h4>📊 Features</h4>
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin: 0;">TF-IDF vectorization analyzing 5000+ distinct linguistic markers.</p>
+      </div>
+      <div class="info-box">
+        <h4>📚 Dataset</h4>
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin: 0;">Trained on tens of thousands of manually labelled global news articles.</p>
+      </div>
+      <div class="info-box" style="border-color: rgba(0, 242, 254, 0.3);">
+        <h4 style="color: #00f2fe;">🔒 Privacy Notice</h4>
+        <p style="font-size: 0.85rem; color: #cbd5e1; margin: 0;">Runs 100% locally. No data leaves your computer.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer" style="background: rgba(0,0,0,0.5); padding: 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px;">
+    <div style="color: #94a3b8; font-size: 0.9rem;">Fake News and Review Detector — Fighting misinformation with intelligent technology.</div>
+    <div style="margin-top: 10px; opacity: 0.5;">
+      <a href="#" style="color: #fff; text-decoration: none; margin: 0 10px;">GitHub</a>
+      <a href="#" style="color: #fff; text-decoration: none; margin: 0 10px;">Documentation</a>
+    </div>
+  </footer>
+
+  <script>
+    // Generate background particles
+    const bg = document.getElementById('particles');
+    for(let i=0; i<30; i++) {
+      let p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (Math.random() * 10 + 10) + 's';
+      p.style.animationDelay = (Math.random() * 10) + 's';
+      bg.appendChild(p);
+    }
+
+    function pasteExample(type) {
+      const input = document.getElementById('newsInput');
+      if(type === 'fake') {
+        input.value = "BREAKING: Scientists have successfully cloned a human being in a secret underground facility. The government has been hiding this technology for decades to create super-soldiers.";
+      } else {
+        input.value = "LPG Cylinder Shortage Hits Delhi High Court Lawyers' Canteen, Main Course Food Suspended. The supply disruption caused several menu items to be removed temporarily.";
+      }
+    }
+
+    function clearCyberInput() {
+      document.getElementById('newsInput').value = '';
+      document.getElementById('cyberResult').style.display = 'none';
+      document.getElementById('newsError').classList.remove('visible');
+    }
+
+    function runCyberAnalysis() {
+      const text = document.getElementById('newsInput').value.trim();
+      if (!text) {
+        const err = document.getElementById('newsError');
+        err.textContent = 'Please paste a news article or headline.';
+        err.classList.add('visible');
+        setTimeout(() => err.classList.remove('visible'), 5000);
+        return;
+      }
+
+      const btn = document.getElementById('analyzeBtn');
+      btn.innerHTML = 'Analyzing...';
+      btn.disabled = true;
+      document.getElementById('cyberResult').style.display = 'none';
+      document.getElementById('confBar').style.width = '0%';
+
+      fetch('/api/detect/news', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      })
+      .then(res => res.json())
+      .then(data => {
+        btn.innerHTML = 'Analyze with AI';
+        btn.disabled = false;
+        
+        const resBox = document.getElementById('cyberResult');
+        resBox.style.display = 'block';
+        resBox.className = 'cyber-result ' + (data.result === 'FAKE' ? 'fake' : 'real');
+        
+        document.getElementById('verdictText').textContent = data.result + " NEWS";
+        
+        // Count up animation
+        let targetConf = parseFloat(data.confidence);
+        let curr = 0;
+        let v = document.getElementById('confValue');
+        let interval = setInterval(() => {
+          curr += targetConf / 20;
+          if(curr >= targetConf) { curr = targetConf; clearInterval(interval); }
+          v.textContent = curr.toFixed(1) + '%';
+        }, 30);
+        
+        setTimeout(() => {
+          document.getElementById('confBar').style.width = targetConf + '%';
+        }, 100);
+
+        if (data.sources && data.sources.length > 0) {
+          let sourcesHtml = '<strong>Real Source Matches:</strong><ul style="list-style: none; padding-left: 0; margin-top: 5px;">';
+          data.sources.forEach(src => {
+            sourcesHtml += `<li style="margin-bottom: 5px;"><a href="${src}" target="_blank" style="color: #00f2fe; text-decoration: none; word-break: break-all;">&#128279; ${src}</a></li>`;
+          });
+          sourcesHtml += '</ul>';
+          document.getElementById('sourceLinks').innerHTML = sourcesHtml;
+        } else {
+          document.getElementById('sourceLinks').innerHTML = '';
+        }
+
+      })
+      .catch(err => {
+        btn.innerHTML = 'Analyze with AI';
+        btn.disabled = false;
+        const errEL = document.getElementById('newsError');
+        errEL.textContent = 'Error executing analysis. Please try again.';
+        errEL.classList.add('visible');
+      });
+    }
+  </script>
+</body>
+</html>
